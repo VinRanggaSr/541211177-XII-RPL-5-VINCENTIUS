@@ -14,8 +14,16 @@ router.get('/users', (req, res) => {
     res.json(users)
   })
 
-  router.put('/user/:id', (req, res) => {
-    res.send('Got a PUT request at /user') // nyimpan perubahan data dgn id tertentu
+  router.put('/user/:id', (req, res) => { // nyimpan perubahan data dgn id tertentu
+    const id = req.params.id //menyimpan id yang ada di url
+    users.filter(user => {
+        if(user.id == id){
+            user.nama = req.body.nama
+            user.email = req.body.email
+            return user
+        }
+    })
+    res.json(users)
   })
 
   router.delete('/user/:id', (req, res) => {
