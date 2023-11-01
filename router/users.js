@@ -9,8 +9,9 @@ router.get('/users', (req, res) => {
     res.json(users)
   })
 
-  router.post('/user', (req, res) => {
-    res.send('Got a POST request') //menyimpan atau menambahkan
+  router.post('/user', (req, res) => { //menyimpan atau menambahkan
+    users.push(req.body) //menyimpan apa yg ada di body kedalam users
+    res.json(users)
   })
 
   router.put('/user/:id', (req, res) => {
