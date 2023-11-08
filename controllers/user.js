@@ -1,7 +1,4 @@
-let users = [  //buat data dummy
-    {id: 1, nama: "Vincentius", email: "vincent@gmail.com"},
-    {id: 2, nama: "Rangga", email: "rangga@gmail.com"},
-]
+const User = require('../models/User')
 
 module.exports = {
     index: (req, res) => {
