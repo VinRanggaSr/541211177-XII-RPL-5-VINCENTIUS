@@ -22,15 +22,19 @@ module.exports = {
         }
         
       },
-      store: (req, res) => { //menyimpan atau menambahkan
-        users.push(req.body) //menyimpan apa yg ada di body kedalam users
-        res.json({
-            status: true,
-            data: users,
-            method: req.method,
-            url: req.url,
-            message: "data berhasil ditambah"
-        })
+      store: async (req, res) => { //menyimpan atau menambahkan
+        try {
+            const user = await User.create(req.body) //ambil data dari body
+            res.status(200).json({
+                status: true,
+                data: user,
+                method: req.method,
+                url: req.url,
+                message: "data berhasil ditambah"
+            })
+        } catch (error) {
+            res.status(400).json({success: false})
+        }
       },
       update: (req, res) => { // nyimpan perubahan data dgn id tertentu
         const id = req.params.id //menyimpan id yang ada di url
