@@ -41,14 +41,10 @@ module.exports = {
       },
       update: async (req, res) => { // nyimpan perubahan data dgn id tertentu
         try{
-            const id =  req.params.id //menyimpan id yang ada di url
-            await User.filter(user => {
-                if(user.id == id){
-                    user.nama = req.body.nama
-                    user.email = req.body.email
-                    return user
-                }
-            })
+            const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+                new : true,
+                runValidators : true
+            }) //menyimpan id yang ada di url yang diisi data bpdy
             res.status(202).json({
                 status: true,
                 data: user,
@@ -56,6 +52,7 @@ module.exports = {
                 url: req.url,
                 message: "data berhasil dirubah"
             })
+            
         } catch (error) {
             console.log(error)
             res.status(400).json({success: false})
