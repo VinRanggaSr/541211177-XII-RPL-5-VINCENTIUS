@@ -58,16 +58,18 @@ module.exports = {
             res.status(400).json({success: false})
         }
       },
-      delete: (req, res) => { //hapus id user dgn id tertentu
-        const id = req.params.id
-        User = User.filter(user => user.id != id)
-    
-        res.json({
-            status: true,
-            data: user,
-            method: req.method,
-            url: req.url,
-            message: "data berhasil dihapus"
-        })
+      delete: async (req, res) => { //hapus id user dgn id tertentu
+        try {
+            await User.findByIdAndDelete(req.params.id)
+            res.json({
+                status: true,
+                method: req.method,
+                url: req.url,
+                message: "data berhasil dihapus"
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({success: false})
+        }
       }
 }
