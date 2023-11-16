@@ -9,7 +9,8 @@ module.exports = {
                     status: true,
                     data: users,
                     method: req.method,
-                    url: req.url
+                    url: req.url,
+                    message: "success"
                 })
             }else{
                 res.json({
@@ -24,8 +25,9 @@ module.exports = {
       },
       store: async (req, res) => { //menyimpan atau menambahkan
         try {
+            console.log(req.body)
             const user = await User.create(req.body) //ambil data dari body
-            res.status(200).json({
+            res.status(201).json({
                 status: true,
                 data: user,
                 method: req.method,
@@ -33,33 +35,39 @@ module.exports = {
                 message: "data berhasil ditambah"
             })
         } catch (error) {
+            console.log(error)
             res.status(400).json({success: false})
         }
       },
-      update: (req, res) => { // nyimpan perubahan data dgn id tertentu
-        const id = req.params.id //menyimpan id yang ada di url
-        users.filter(user => {
-            if(user.id == id){
-                user.nama = req.body.nama
-                user.email = req.body.email
-                return user
-            }
-        })
-        res.json({
-            status: true,
-            data: users,
-            method: req.method,
-            url: req.url,
-            message: "data berhasil dirubah"
-        })
+      update: async (req, res) => { // nyimpan perubahan data dgn id tertentu
+        try{
+            const id =  req.params.id //menyimpan id yang ada di url
+            await User.filter(user => {
+                if(user.id == id){
+                    user.nama = req.body.nama
+                    user.email = req.body.email
+                    return user
+                }
+            })
+            res.status(202).json({
+                status: true,
+                data: user,
+                method: req.method,
+                url: req.url,
+                message: "data berhasil dirubah"
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({success: false})
+        }
       },
       delete: (req, res) => { //hapus id user dgn id tertentu
         const id = req.params.id
-        users = users.filter(user => user.id != id)
+        User = User.filter(user => user.id != id)
     
         res.json({
             status: true,
-            data: users,
+            data: user,
             method: req.method,
             url: req.url,
             message: "data berhasil dihapus"

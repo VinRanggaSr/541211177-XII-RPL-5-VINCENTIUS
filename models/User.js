@@ -4,13 +4,13 @@ const UserSchema = new mongoose.Schema({
     nama: {
         type: String, 
         required: [true, 'Silahkan isikan nama'], //harus diisi, jika tidak diisi munculkan ' '
-        unique: true //harus unik
+        // unique: true 
     },
     email: {
         type: String,
         required: true,
-        unique: true,
-        match: [/^\w+([\,-]?\w+)*@\w+([\,-]?\w+)*(\.\w{2,3})+$/, 'Silahkan isi email valid']
+        unique: true, //harus unik
+        // match: [/^\w+([\,-]?\w+)*@\w+([\,-]?\w+)*(\.\w{2,3})+$/, 'Silahkan isi email valid']
     }
 })
 
