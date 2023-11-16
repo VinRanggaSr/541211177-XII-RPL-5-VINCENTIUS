@@ -1,6 +1,7 @@
 const User = require('../models/User')
 
 module.exports = {
+    // all data
     index: async(req, res) => {
         try {
             const users = await User.find()
@@ -23,6 +24,24 @@ module.exports = {
         }
         
       },
+      // tampilkan data id tertentu
+      show: async (req, res) => { // nyimpan perubahan data dgn id tertentu
+        try{
+            const user = await User.findById(req.params.id) //menyimpan id yang ada di url yang diisi data bpdy
+            res.status(202).json({
+                status: true,
+                data: user,
+                method: req.method,
+                url: req.url,
+                message: "data berhasil didapatkan"
+            })
+            
+        } catch (error) {
+            console.log(error)
+            res.status(400).json({success: false})
+        }
+      },
+      //  data
       store: async (req, res) => { //menyimpan atau menambahkan
         try {
             console.log(req.body)
